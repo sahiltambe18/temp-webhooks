@@ -17,7 +17,8 @@ app.get('/', (req, res) => {
 app.post('/api', (req, res) => {
 
     const payload = JSON.parse(req.body.payload);
-    console.log('POST request received:', payload);
+    const attachments = JSON.parse(payload.message.attachments);
+    console.log('POST request received:', attachments);
 
     // Extract alert name from title
     const title = payload.message.attachments[0]?.title || '';
