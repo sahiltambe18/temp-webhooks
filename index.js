@@ -15,7 +15,9 @@ app.get('/', (req, res) => {
 })
 
 app.post('/api', (req, res) => {
-    console.log('POST request received', req.body);
+
+    const body = JSON.parse(req.body);
+    console.log('POST request received', body.payload);
     res.send('POST request received');
 })
 
