@@ -1,5 +1,6 @@
 const express = require('express');
-
+const AlertHelper = require('./alerthelper');
+const { default: AlertManager } = require('./alerthelper');
 
 const app = express();
 
@@ -14,19 +15,21 @@ app.get('/', (req, res) => {
     res.send('Hello World!');
 })
 
-app.post('/api', (req, res) => {
+app.post('/api', async (req, res) => {
 
     const payload = JSON.parse(req.body.payload);
     const attachments = payload.message.attachments;
     console.log('POST request received:', attachments);
 
     // Extract alert name from title
-    const title = payload.message.attachments[0]?.title || '';
-    const alertName = title.split(' ')[0]; // Basic parsing
-    const duration = 60; // minutes
+    const alertName = payload.message.attachments[0]?.title || '';
+    // const alertName = title.split(' ')[0]; // Basic parsing
+    const duration = 60*6; // minutes
+
+
 
     console.log(`Alert Name: ${alertName}`);
-    console.log("title", title);
+    await AlertManager.silence(alertName,duration)
     console.log("duration", duration);
     res.send('POST request received');
 })
