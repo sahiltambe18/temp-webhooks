@@ -31,7 +31,10 @@ app.post('/api', async (req, res) => {
     console.log(`Alert Name: ${alertName}`);
     await AlertManager.silence(alertName,duration)
     console.log("duration", duration);
-    res.status(200).send('POST request received');
+    res.json({
+        response_type: 'ephemeral',
+        text: ` Silenced alert *${alertName}* for ${duration} minutes.`
+      });
 })
 
 
