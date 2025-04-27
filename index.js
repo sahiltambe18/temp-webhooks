@@ -16,7 +16,7 @@ app.get('/', (req, res) => {
 })
 
 app.post('/api', async (req, res) => {
-
+    res.status(200).send('');
     const payload = JSON.parse(req.body.payload);
     const attachments = payload.message.attachments;
     console.log('POST request received:', attachments);
@@ -31,10 +31,10 @@ app.post('/api', async (req, res) => {
     console.log(`Alert Name: ${alertName}`);
     await AlertManager.silence(alertName,duration)
     console.log("duration", duration);
-    res.json({
-        response_type: 'ephemeral',
-        text: ` Silenced alert *${alertName}* for ${duration} minutes.`
-      });
+    // res.json({
+    //     response_type: 'ephemeral',
+    //     text: ` Silenced alert *${alertName}* for ${duration} minutes.`
+    //   });
 })
 
 
